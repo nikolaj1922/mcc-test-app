@@ -146,16 +146,16 @@ const Controls = () => {
           title='Add'
           type='Add'
           onClick={() => {
-            if (title.length < 1) {
-              toast('Write some Node title!', {
+            if (title.trim().length < 1) {
+              toast('Write some title!', {
                 icon: '✍️',
               })
               inputRef.current?.focus()
             } else {
-              handleAddNode(activeNode, title)
+              handleAddNode(activeNode, title.trim())
             }
           }}
-          isDisabled={title.length < 1}
+          isDisabled={title.trim().length < 1}
         />
         <Button
           title='Remove'
@@ -163,9 +163,7 @@ const Controls = () => {
           isDisabled={activeNode === 1}
           onClick={() => {
             if (activeNode === 1) {
-              toast('Cannot remove root Node!', {
-                icon: '🤔',
-              })
+              toast.error('Cannot remove root Node!')
             } else {
               handleDeleteNode(activeNode)
             }
@@ -175,16 +173,16 @@ const Controls = () => {
           title='Edit'
           type='Edit'
           onClick={() => {
-            if (title.length < 1) {
-              toast('Write some Node title!', {
+            if (title.trim().length < 1) {
+              toast('Write some title!', {
                 icon: '✍️',
               })
               inputRef.current?.focus()
             } else {
-              handleEditNode(activeNode, title)
+              handleEditNode(activeNode, title.trim())
             }
           }}
-          isDisabled={title.length < 1}
+          isDisabled={title.trim().length < 1}
         />
         <Button title='Reset' type='Reset' onClick={handleResetTree} />
       </div>
