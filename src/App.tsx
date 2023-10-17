@@ -1,17 +1,32 @@
 import { Toaster } from 'react-hot-toast'
+import { useState } from 'react'
 
 import TreeNode from './components/TreeNode'
 import Header from './components/shared/Header'
-import { useTree } from './context/TreeContext'
+import { ITreeNode } from './types'
 
 function App() {
-  const { tree } = useTree()
+  const [activeNode, setActiveNode] = useState<number>(1)
+  const [nodeTree, setNodeTree] = useState<ITreeNode>({
+    id: 1,
+    title: 'Root',
+    children: [],
+  })
 
   return (
     <>
-      <Header />
+      <Header
+        nodeTree={nodeTree}
+        setNodeTree={setNodeTree}
+        activeNode={activeNode}
+        setActiveNode={setActiveNode}
+      />
       <main className='mt-[110px] px-8 py-6'>
-        <TreeNode data={tree} />
+        <TreeNode
+          nodeTree={nodeTree}
+          setActiveNode={setActiveNode}
+          activeNode={activeNode}
+        />
       </main>
       <Toaster
         position='bottom-right'

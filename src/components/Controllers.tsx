@@ -1,13 +1,17 @@
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import toast from 'react-hot-toast'
 
 import Button from './ui/Button'
-import { useTree } from '../context/TreeContext'
 import { UpdateTreeType, ITreeNode } from '../types'
 
-const Controls = () => {
-  const { tree, setTree, activeNode, setActiveNode } = useTree()
+interface Props {
+  nodeTree: ITreeNode
+  setNodeTree: React.Dispatch<React.SetStateAction<ITreeNode>>
+  activeNode: number
+  setActiveNode: React.Dispatch<React.SetStateAction<number>>
+}
 
+const Controllers = ({ activeNode, setActiveNode, nodeTree, setNodeTree }: Props) => {
   const [title, setTitle] = useState('')
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -99,40 +103,40 @@ const Controls = () => {
 
     const updatedTree = handleUpdateNode({
       newNode,
-      node: tree,
+      node: nodeTree,
       parentId,
       operation: 'ADD',
     })
 
-    setTree(updatedTree)
+    setNodeTree(updatedTree)
     setTitle('')
     toast.success('Node added successfully!')
   }
   const handleDeleteNode = (nodeId: number) => {
     const updatedTree = handleUpdateNode({
-      node: tree,
+      node: nodeTree,
       operation: 'REMOVE',
       nodeId,
     })
 
-    setTree(updatedTree)
+    setNodeTree(updatedTree)
     setActiveNode(1)
     toast.success('Node removed successfully!')
   }
   const handleEditNode = (nodeId: number, newTitle: string) => {
     const updatedTree = handleUpdateNode({
-      node: tree,
+      node: nodeTree,
       operation: 'EDIT',
       nodeId,
       newTitle,
     })
 
-    setTree(updatedTree)
+    setNodeTree(updatedTree)
     setTitle('')
     toast.success('Node edited successfully!')
   }
   const handleResetTree = () => {
-    setTree({
+    setNodeTree({
       id: 1,
       title: 'Root',
       children: [],
@@ -203,4 +207,4 @@ const Controls = () => {
   )
 }
 
-export default Controls
+export default Controllers

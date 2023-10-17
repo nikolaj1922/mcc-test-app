@@ -1,6 +1,21 @@
-import Controls from '../Controls'
+import React from 'react'
 
-const Header = () => {
+import { ITreeNode } from '../../types'
+import Controllers from '../Controllers'
+
+interface Props {
+  nodeTree: ITreeNode
+  setNodeTree: React.Dispatch<React.SetStateAction<ITreeNode>>
+  activeNode: number
+  setActiveNode: React.Dispatch<React.SetStateAction<number>>
+}
+
+const Header = ({
+  nodeTree,
+  activeNode,
+  setActiveNode,
+  setNodeTree,
+}: Props) => {
   return (
     <header className='fixed top-0 flex w-full items-center border-b-2 bg-white px-10 py-6'>
       <div className='flex items-center gap-4'>
@@ -13,7 +28,12 @@ const Header = () => {
       </div>
 
       <div className='ml-24'>
-        <Controls />
+        <Controllers
+          nodeTree={nodeTree}
+          activeNode={activeNode}
+          setActiveNode={setActiveNode}
+          setNodeTree={setNodeTree}
+        />
       </div>
     </header>
   )

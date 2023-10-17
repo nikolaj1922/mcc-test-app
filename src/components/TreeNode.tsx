@@ -1,27 +1,35 @@
-import { useTree } from '../context/TreeContext'
+import React from 'react'
+
 import { ITreeNode } from '../types'
 
 interface Props {
-  data: ITreeNode
+  nodeTree: ITreeNode
+  setActiveNode: React.Dispatch<React.SetStateAction<number>>
+  activeNode: number
 }
 
-const TreeNode = ({ data }: Props) => {
-  const { activeNode, setActiveNode } = useTree()
-
+const TreeNode = ({ nodeTree, setActiveNode, activeNode }: Props) => {
   return (
     <>
       <div
         className={`mb-2 flex min-h-[80px] w-[180px] cursor-pointer rounded-md bg-green-100 px-4 py-2 transition-all duration-100 hover:bg-green-200 ${
-          activeNode === data.id && 'outline outline-green-500'
+          activeNode === nodeTree.id && 'outline outline-green-500'
         }`}
-        onClick={() => setActiveNode(data.id)}
+        onClick={() => setActiveNode(nodeTree.id)}
       >
-        <p className='w-full break-words text-xl font-semibold'>{data.title}</p>
+        <p className='w-full break-words text-xl font-semibold'>
+          {nodeTree.title}
+        </p>
       </div>
-      {data.children.length > 0 && (
+      {nodeTree.children.length > 0 && (
         <div className='ml-20'>
-          {data.children.map((child: ITreeNode) => (
-            <TreeNode data={child} key={child.id} />
+          {nodeTree.children.map((child: ITreeNode) => (
+            <TreeNode
+              key={child.id}
+              nodeTree={child}
+              setActiveNode={setActiveNode}
+              activeNode={activeNode}
+            />
           ))}
         </div>
       )}
