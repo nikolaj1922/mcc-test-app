@@ -141,6 +141,8 @@ const Controllers = ({ activeNode, setActiveNode, nodeTree, setNodeTree }: Props
       title: 'Root',
       children: [],
     })
+    setActiveNode(1)
+    toast.success('Tree Node reset successfully!')
   }
 
   return (
